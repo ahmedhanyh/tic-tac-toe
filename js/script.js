@@ -12,17 +12,16 @@ const gameBoard = (function() {
     }
 
     const renderGameBoard = () => {
-        const gameBoardDiv = document.createElement("div");
-        gameBoardDiv.setAttribute("id", "gameboard");
+        const gameBoardFragment = document.createDocumentFragment();
 
         _gameboard.forEach((element, row) => {
             element.forEach((item, column) => {
-                _addToGameBoardDiv(item, row, column, gameBoardDiv);
+                _addToGameBoardDiv(item, row, column, gameBoardFragment);
             })
         });
 
-        document.querySelector("body")
-          .appendChild(gameBoardDiv);
+        document.querySelector("#gameboard")
+          .appendChild(gameBoardFragment);
     }
 
     const getGameBoard = () => _gameboard;

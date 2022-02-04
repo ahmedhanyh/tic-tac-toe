@@ -9,7 +9,24 @@
 </head>
 <body>
     <h1 id="main-heading">Tic Tac Toe</h1>
-    <div id="gameboard"></div>
+    <div id="gameboard-container"></div>
+    <div id="form-and-btns">
+        <div id="form-container">
+            <form>
+                <div>
+                    <label for="name1">Player 1</label>
+                    <input type="text" id="name1" placeholder="Enter a name"/>
+                </div>
+                <div>
+                    <label for="name2">Player 2</label>
+                    <input type="text" id="name2" placeholder="Enter a name"/>
+                </div>
+            </form>
+        </div>
+        <button id="start-btn" class="btn">Start</button>
+        <button id="restart-btn" class="btn">Restart</button>
+        <p id="result"></p>
+    </div>
     <script src="js/script.js"></script>
 </body>
 </html>
