@@ -12,16 +12,17 @@ const gameBoard = (function() {
     }
 
     const renderGameBoard = () => {
-        const gameBoardFragment = document.createDocumentFragment();
+        const gameBoardDiv = document.createElement("div");
+        gameBoardDiv.setAttribute("id", "gameboard");
 
         _gameboard.forEach((element, row) => {
             element.forEach((item, column) => {
-                _addToGameBoardDiv(item, row, column, gameBoardFragment);
+                _addToGameBoardDiv(item, row, column, gameBoardDiv);
             })
         });
 
-        document.querySelector("#gameboard")
-          .appendChild(gameBoardFragment);
+        document.querySelector("#gameboard-container")
+          .appendChild(gameBoardDiv);
     }
 
     const getGameBoard = () => _gameboard;
@@ -46,12 +47,10 @@ const Player = (name, mark) => {
 
 const player1 = Player("Name1", "X");
 const player2 = Player("Name2", "O");
-const gameboard = gameBoard.getGameBoard();
 
-gameBoard.renderGameBoard();
-
-const gameFlow = (function() {
+const gameFlow = (function(gameBoard) {
     
+    const _gameBoard = gameBoard.getGameBoard();
     const _players = [player1, player2];
     let _turn = 0;
     let _gameOver = false;
@@ -90,17 +89,15 @@ const gameFlow = (function() {
     }
 
     const _checkIfWon = (row, column, player) => {
-        
-        const gameBoard = gameboard;
 
-        const rowComplete = gameBoard[row].every(mark => mark === player.mark);
+        const rowComplete = _gameBoard[row].every(mark => mark === player.mark);
         if (rowComplete) {
             console.log(`${player.name} Wins!`);
             return true;
         }
 
         const col = [];
-        gameBoard.forEach(row => col.push(row[column]));
+        _gameBoard.forEach(row => col.push(row[column]));
         const columnComplete = col.every(mark => mark === player.mark);
 
         if (columnComplete) {
@@ -115,7 +112,7 @@ const gameFlow = (function() {
         }
         
         const mainDiagonal = [];
-        gameBoard.forEach((row, index) => mainDiagonal.push(row[index]));
+        _gameBoard.forEach((row, index) => mainDiagonal.push(row[index]));
         const mainDiagonalComplete = mainDiagonal.every(mark => mark === player.mark);
 
         if (mainDiagonalComplete) {
@@ -124,7 +121,7 @@ const gameFlow = (function() {
         }
 
         const secondaryDiagonal = [];
-        gameBoard.forEach((row, index) => secondaryDiagonal.push(row[2 - index]));
+        _gameBoard.forEach((row, index) => secondaryDiagonal.push(row[2 - index]));
         const secondaryDiagonalComplete = secondaryDiagonal.every(mark => mark === player.mark);
 
         if (secondaryDiagonalComplete) {
@@ -134,14 +131,15 @@ const gameFlow = (function() {
     }
     
     const _checkIfTied = () => {
-        const gameBoard = gameboard;
+
         for (let row = 0; row < 3; row++) {
             for (let col = 0; col < 3; col++) {
-                if (gameBoard[row][col] === "") {
+                if (_gameBoard[row][col] === "") {
                     return false;
                 }
             }
         }
+
         return true;
     }
     
@@ -151,8 +149,10 @@ const gameFlow = (function() {
     }
 
     const startGame = () => {
+        gameBoard.renderGameBoard();
+
         document.querySelector("#gameboard")
-          .addEventListener("click", e => gameFlow.markASpot(e));
+          .addEventListener("click", e => markASpot(e));
     }
 
     return {
@@ -160,6 +160,4 @@ const gameFlow = (function() {
         markASpot,
     }
     
-})();
-
-gameFlow.startGame();
+})(gameBoard);
