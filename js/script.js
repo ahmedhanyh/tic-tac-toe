@@ -81,6 +81,12 @@ const gameFlow = (function() {
             return;
         };
 
+        if (_checkIfTied()) {
+            _gameOver = true;
+            console.log("It's a tie!");
+            return;
+        }
+
         _switchTurns();
     }
 
@@ -126,6 +132,18 @@ const gameFlow = (function() {
             console.log(`${player.name} Wins!`);
             return true;
         }
+    }
+    
+    const _checkIfTied = () => {
+        const gameBoard = gameboard;
+        for (let row = 0; row < 3; row++) {
+            for (let col = 0; col < 3; col++) {
+                if (gameBoard[row][col] === "") {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
     
     const _switchTurns = () => {
