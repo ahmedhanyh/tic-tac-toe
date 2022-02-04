@@ -45,13 +45,10 @@ const Player = (name, mark) => {
     }
 }
 
-const player1 = Player("Name1", "X");
-const player2 = Player("Name2", "O");
-
 const gameFlow = (function(gameBoard) {
     
     const _gameBoard = gameBoard.getGameBoard();
-    const _players = [player1, player2];
+    const _players = [];
     let _turn = 0;
     let _gameOver = false;
     
@@ -149,6 +146,22 @@ const gameFlow = (function(gameBoard) {
     }
 
     const startGame = () => {
+        const name1 = document.querySelector("#name1").value;
+        const name2 = document.querySelector("#name2").value;
+
+        if (name1 === "" || name2 === "") {
+            alert("You must fill both fields.");
+            return;
+        }
+
+        const player1 = Player(name1);
+        const player2 = Player(name2);
+        
+        player1.mark = "X";
+        player2.mark = "O";
+
+        _players.push(player1, player2);
+
         gameBoard.renderGameBoard();
 
         document.querySelector("#gameboard")
@@ -161,3 +174,6 @@ const gameFlow = (function(gameBoard) {
     }
     
 })(gameBoard);
+
+document.querySelector("#start-btn")
+  .addEventListener("click", gameFlow.startGame);
