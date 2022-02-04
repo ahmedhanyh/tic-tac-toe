@@ -59,7 +59,7 @@ const gameFlow = (function(gameBoard) {
         
         if (!target.classList.contains("item")) {
             return;
-        } else if (target.textContent !== "") {
+        } else if (target.classList.contains("clicked")) {
             return;
         } else if (_gameOver) {
             return;
@@ -70,6 +70,8 @@ const gameFlow = (function(gameBoard) {
         const { row, column } = target.dataset;
 
         gameBoard.updateGameBoard(row, column, player.mark);
+
+        target.classList.add("clicked");
 
         if(_checkIfWon(row, column, player)) {
             _gameOver = true;
@@ -146,16 +148,16 @@ const gameFlow = (function(gameBoard) {
     }
 
     const startGame = () => {
-        const name1 = document.querySelector("#name1").value;
-        const name2 = document.querySelector("#name2").value;
+        const input1 = document.querySelector("#name1");
+        const input2 = document.querySelector("#name2");
 
-        if (name1 === "" || name2 === "") {
+        if (input1.value === "" || input2.value === "") {
             alert("You must fill both fields.");
             return;
         }
 
-        const player1 = Player(name1);
-        const player2 = Player(name2);
+        const player1 = Player(input1.value);
+        const player2 = Player(input2.value);
         
         player1.mark = "X";
         player2.mark = "O";
@@ -166,6 +168,21 @@ const gameFlow = (function(gameBoard) {
 
         document.querySelector("#gameboard")
           .addEventListener("click", e => markASpot(e));
+        
+        document.querySelectorAll(".item")
+          .forEach(item => {
+              item.addEventListener("mouseenter", () => {
+                  if (!item.classList.contains("clicked") && !_gameOver) {
+                      item.textContent = _players[_turn].mark;
+                  }
+              });
+
+              item.addEventListener("mouseleave", () => {
+                if (!item.classList.contains("clicked") && !_gameOver) {
+                    item.textContent = "";
+                }
+            });
+          });
     }
 
     return {
