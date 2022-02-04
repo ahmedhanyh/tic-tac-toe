@@ -145,7 +145,6 @@ const gameFlow = (function(gameBoard) {
     
     const _switchTurns = () => {
         _turn = _turn === 0 ? 1 : 0;
-        console.log(`It's ${_players[_turn].name}'s turn.`);   
     }
 
     const startGame = () => {
@@ -162,6 +161,10 @@ const gameFlow = (function(gameBoard) {
         
         player1.mark = "X";
         player2.mark = "O";
+
+        [input1.value, input2.value] = ["", ""];
+        input1.disabled = true;
+        input2.disabled = true;
 
         _players.push(player1, player2);
 
@@ -186,12 +189,25 @@ const gameFlow = (function(gameBoard) {
           });
     }
 
+    const restartGame = () => {
+        document.querySelectorAll("input")
+          .forEach(input => input.disabled = false);
+        
+        document.querySelector("#gameboard-container").innerHTML = "";
+
+        resultDisplay.textContent = "";
+    }
+
     return {
-        startGame,
         markASpot,
+        startGame,
+        restartGame,
     }
     
 })(gameBoard);
 
 document.querySelector("#start-btn")
   .addEventListener("click", gameFlow.startGame);
+
+document.querySelector("#restart-btn")
+  .addEventListener("click", gameFlow.restartGame);
