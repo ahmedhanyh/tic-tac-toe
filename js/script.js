@@ -49,6 +49,7 @@ const gameFlow = (function(gameBoard) {
     
     const _gameBoard = gameBoard.getGameBoard();
     const _players = [];
+    const resultDisplay = document.querySelector("#result");
     let _turn = 0;
     let _gameOver = false;
     
@@ -80,7 +81,7 @@ const gameFlow = (function(gameBoard) {
 
         if (_checkIfTied()) {
             _gameOver = true;
-            console.log("It's a tie!");
+            resultDisplay.textContent = "It's a tie!";
             return;
         }
 
@@ -91,7 +92,7 @@ const gameFlow = (function(gameBoard) {
 
         const rowComplete = _gameBoard[row].every(mark => mark === player.mark);
         if (rowComplete) {
-            console.log(`${player.name} Wins!`);
+            resultDisplay.textContent = `${player.name} Wins!`;
             return true;
         }
 
@@ -100,7 +101,7 @@ const gameFlow = (function(gameBoard) {
         const columnComplete = col.every(mark => mark === player.mark);
 
         if (columnComplete) {
-            console.log(`${player.name} Wins!`);
+            resultDisplay.textContent = `${player.name} Wins!`;
             return true;
         }
         
@@ -115,7 +116,7 @@ const gameFlow = (function(gameBoard) {
         const mainDiagonalComplete = mainDiagonal.every(mark => mark === player.mark);
 
         if (mainDiagonalComplete) {
-            console.log(`${player.name} Wins!`);
+            resultDisplay.textContent = `${player.name} Wins!`;
             return true;
         }
 
@@ -124,7 +125,7 @@ const gameFlow = (function(gameBoard) {
         const secondaryDiagonalComplete = secondaryDiagonal.every(mark => mark === player.mark);
 
         if (secondaryDiagonalComplete) {
-            console.log(`${player.name} Wins!`);
+            resultDisplay.textContent = `${player.name} Wins!`;
             return true;
         }
     }
