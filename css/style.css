@@ -6,15 +6,23 @@
 
 body {
     box-sizing: border-box;
+    padding: 64px;
     width: 100vw;
     height: 100vh;
+    font-family: cursive;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    gap: 64px;
+}
+
+#main-heading {
+    font-size: 48px;
 }
 
 #gameboard {
     box-sizing: border-box;
+    background-color: black;
     width: 50vh;
     height: 50vh;
     display: grid;
@@ -24,16 +32,10 @@ body {
 }
 
 .item {
-    border: 2px solid black;
-    font-size: 48px;
-    font-weight: bold;
-    font-family: sans-serif;
+    background-color: white;
+    font-size: 84px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-}
-
-.item:hover {
-    transform: scale(1.1);
 }
