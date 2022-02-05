@@ -33,8 +33,8 @@ const gameBoard = (function() {
 
     return {
         renderGameBoard,
-        updateGameBoard,
         getGameBoard,
+        updateGameBoard,
     }
 })();
 
@@ -168,8 +168,6 @@ const gameFlow = (function(gameBoard) {
 
         _players.push(player1, player2);
 
-        gameBoard.renderGameBoard();
-
         document.querySelector("#gameboard")
           .addEventListener("click", e => markASpot(e));
         
@@ -194,7 +192,15 @@ const gameFlow = (function(gameBoard) {
           .forEach(input => input.disabled = false);
         
         document.querySelector("#gameboard-container").innerHTML = "";
+        
+        for(let row = 0; row < 3; row++) {
+            for(let col = 0; col < 3; col++) {
+                gameBoard.updateGameBoard(row, col, '');
+            }
+        }
 
+        gameBoard.renderGameBoard();
+        
         resultDisplay.textContent = "";
     }
 
@@ -205,6 +211,8 @@ const gameFlow = (function(gameBoard) {
     }
     
 })(gameBoard);
+
+gameBoard.renderGameBoard();
 
 document.querySelector("#start-btn")
   .addEventListener("click", gameFlow.startGame);
