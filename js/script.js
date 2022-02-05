@@ -92,7 +92,7 @@ const gameFlow = (function(gameBoard) {
 
         const rowComplete = _gameBoard[row].every(mark => mark === player.mark);
         if (rowComplete) {
-            resultDisplay.textContent = `${player.name} Wins!`;
+            resultDisplay.textContent = `${player.name} wins!`;
             return true;
         }
 
@@ -101,7 +101,7 @@ const gameFlow = (function(gameBoard) {
         const columnComplete = col.every(mark => mark === player.mark);
 
         if (columnComplete) {
-            resultDisplay.textContent = `${player.name} Wins!`;
+            resultDisplay.textContent = `${player.name} wins!`;
             return true;
         }
         
@@ -116,7 +116,7 @@ const gameFlow = (function(gameBoard) {
         const mainDiagonalComplete = mainDiagonal.every(mark => mark === player.mark);
 
         if (mainDiagonalComplete) {
-            resultDisplay.textContent = `${player.name} Wins!`;
+            resultDisplay.textContent = `${player.name} wins!`;
             return true;
         }
 
@@ -125,7 +125,7 @@ const gameFlow = (function(gameBoard) {
         const secondaryDiagonalComplete = secondaryDiagonal.every(mark => mark === player.mark);
 
         if (secondaryDiagonalComplete) {
-            resultDisplay.textContent = `${player.name} Wins!`;
+            resultDisplay.textContent = `${player.name} wins!`;
             return true;
         }
     }
@@ -185,6 +185,11 @@ const gameFlow = (function(gameBoard) {
                 }
             });
           });
+
+          resultDisplay.textContent = "Game's begun";
+          setTimeout(() => {
+              resultDisplay.textContent = "";
+          }, 3000);
     }
 
     const restartGame = () => {
@@ -195,13 +200,15 @@ const gameFlow = (function(gameBoard) {
         
         for(let row = 0; row < 3; row++) {
             for(let col = 0; col < 3; col++) {
-                gameBoard.updateGameBoard(row, col, '');
+                gameBoard.updateGameBoard(row, col, "");
             }
         }
 
         gameBoard.renderGameBoard();
         
         resultDisplay.textContent = "";
+
+        _gameOver = false;
     }
 
     return {
