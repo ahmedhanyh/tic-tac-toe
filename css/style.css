@@ -98,3 +98,9 @@ label, input {
     align-items: center;
     gap: 12px;
 }
+
+#result {
+    height: 42px;
+    font-size: 36px;
+    color: rgb(0, 105, 0);
+}
